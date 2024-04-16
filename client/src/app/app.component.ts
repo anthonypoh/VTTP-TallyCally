@@ -68,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
         });
     }
   }
-  
+
   ngOnDestroy(): void {
     this.routerListener$.unsubscribe()
     if (this.messageSubscription) {
@@ -122,7 +122,7 @@ export class AppComponent implements OnInit, OnDestroy {
         (fcmObject: FcmObject) => {
           this.fcmObject = fcmObject;
           console.log(fcmObject);
-          this.messageService.add({ severity: 'info', summary: fcmObject.title, detail: fcmObject.body });
+          this.messageService.add({ severity: 'info', summary: fcmObject.title, detail: fcmObject.body, sticky: true });
           this.messagingService.requestToken(this.user.email)
         },
         error => {

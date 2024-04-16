@@ -53,7 +53,7 @@ export class EditEventComponent {
         if (msg == 'Successfully edited event') {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
         } else {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
         }
         const token = this.cookieService.get('user_token')
         this.userService.checkToken(token).then(user => {

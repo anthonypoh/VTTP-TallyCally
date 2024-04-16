@@ -92,7 +92,8 @@ public class TelegramBot extends TelegramLongPollingBot {
     message.setText(
       """
       /help - List of commands\n
-      /register - Register bot with existing group: /register insert-link-here
+      /register - Register bot with existing group: /register insert-link-here\n
+      /events - List of events
         """
     );
     exec(message);
@@ -103,7 +104,7 @@ public class TelegramBot extends TelegramLongPollingBot {
       String msg =
         """
         I've succesfully registered to your group.\n
-        By default I will display event notifcations 1 day before the start time.
+        By default I will display event notifcations 1 hour before the start time.
           """;
       sendSuccess(chatId, msg);
     } else {

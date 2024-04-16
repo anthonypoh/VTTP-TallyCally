@@ -173,7 +173,7 @@ public class CalendarService {
     System.out.println(eventDoc.toJson());
 
     if (!eventDoc.getDate("timestamp").equals(timestampDate)) {
-      msg = "This event has been changed already, please refresh";
+      msg = "This event has been changed already, please check again";
       return msg;
     }
 
