@@ -47,6 +47,7 @@ export class NewGroupComponent {
 
         if (msg == 'success') {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Group added' });
+          this.createForm()
         } else {
           this.messageService.add({severity:'error', summary: 'Error', detail: 'Something went wrong'});
         }

@@ -52,6 +52,7 @@ export class EditEventComponent {
         console.log(msg)
         if (msg == 'Successfully edited event') {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: msg });
+          this.createForm()
         } else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: msg });
         }
