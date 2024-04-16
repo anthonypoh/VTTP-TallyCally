@@ -36,7 +36,7 @@ public class UserController {
       return ResponseEntity.ok("{\"msg\":\"success\"}");
     }
 
-    return ResponseEntity.internalServerError().body("{\"msg\":\"failed\"}");
+    return ResponseEntity.ok("{\"msg\":\"failed\"}");
   }
 
   @PostMapping(path = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -96,6 +96,6 @@ public class UserController {
       return ResponseEntity.ok("{\"msg\":\"success\"}");
     }
 
-    return ResponseEntity.internalServerError().body("{\"msg\":\"fail\"}");
+    return ResponseEntity.ok("{\"msg\":\"fail\"}");
   }
 }
