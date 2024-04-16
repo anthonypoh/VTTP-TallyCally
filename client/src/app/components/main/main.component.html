@@ -1,0 +1,137 @@
+<p-toast />
+<ng-container *ngIf="user$ | async as user">
+  <!-- <ng-container *ngIf="user.email != ''; else login"> -->
+  <div class="flex overflow-hidden">
+    <div class="flex-none flex py-2 mr-2">
+      <button pButton (click)="createGroup()" type="button" label="New Group" icon="pi pi-users"></button>
+      <p-dialog header="New Group" [(visible)]="newGroupDialog">
+        <app-new-group (closeDialog)="newGroupDialog = false" />
+      </p-dialog>
+    </div>
+    <div class="flex-none flex py-2 mr-2">
+      <button pButton (click)="joinGroup()" type="button" label="Join Group" icon="pi pi-users"></button>
+      <!-- <p-dialog header="Join Group" [(visible)]="joinGroupDialog">
+          <app-join (closeDialog)="joinGroupDialog = false" />
+        </p-dialog> -->
+    </div>
+    <div class="flex-grow-1 flex">
+      <p-tabMenu [scrollable]="true" [model]="items" [activeItem]="activeItem"
+        (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
+    </div>
+    <div class="flex py-2 mr-2">
+      <p-sidebar [(visible)]="holidaysVisible" [style]="{width:'25vw'}">
+        <h3>Holiday Checker</h3>
+        <app-holiday-checker />
+      </p-sidebar>
+      <p-button (click)="toggleHolidays()" label="Holiday Checker" icon="pi pi-arrow-right"></p-button>
+    </div>
+  </div>
+
+  <ng-template #groupTemplate let-groupEvent>
+    <div class="flex flex-row flex-wrap my-4">
+      <div class="flex mr-3">
+        <span class="text-5xl m-0">{{ groupEvent.groupName }}</span>
+      </div>
+      <div class="flex">
+        <button pButton (click)="createEvent(groupEvent.group_id)" type="button" class="p-button-success"
+          icon="pi pi-calendar-plus"></button>
+      </div>
+      <div class="flex ml-auto">
+        <button pButton (click)="generateLink(groupEvent.group_id)" type="button" label="Invite"
+          class="p-button-success" icon="pi pi-users"></button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="groupEvent.events.length > 0; else noEvents">
+      <div class="grid">
+        <div *ngFor="let event of groupEvent.events" class="lg:col-3 sm:col-12">
+          <p-card [header]="event.title" [subheader]="event.description" styleClass="shadow-5">
+            <ng-template pTemplate="header">
+              <div [ngStyle]="{background: 'blue', borderRadius: '9px 9px 0 0'}">&nbsp;</div>
+            </ng-template>
+            <p>
+              <strong>Location:</strong> {{ event.location }} <br>
+              <strong>Start:</strong> {{ event.start | date:'medium' }} <br>
+              <strong>End:</strong> {{ event.end | date:'medium' }} <br>
+            </p>
+            <ng-template pTemplate="footer">
+              <button pButton (click)="editEvent(event, groupEvent.group_id)" label="Edit" icon="pi pi-pencil"></button>
+              <p-confirmPopup></p-confirmPopup>
+              <button pButton (click)="confirmDelete($event, event, groupEvent.group_id)" label="Delete"
+                icon="pi pi-trash" class="p-button-danger ml-2"></button>
+            </ng-template>
+          </p-card>
+        </div>
+      </div>
+    </ng-container>
+    <p-divider />
+  </ng-template>
+
+  <p-dialog header="New Event" [(visible)]="newEventDialog" [style]="{width: '30vw'}">
+    <app-new-event (closeDialog)="newEventDialog = false" [group_id]="selectedGroup_Id"></app-new-event>
+  </p-dialog>
+
+  <p-dialog header="Edit Event" [(visible)]="editEventDialog" [style]="{width: '30vw'}">
+    <app-edit-event (closeDialog)="editEventDialog = false" [event]="editedEvent"
+      [group_id]="selectedGroup_Id"></app-edit-event>
+  </p-dialog>
+
+  <p-dialog header="Invite Link" [(visible)]="generateLinkDialog" [style]="{width: '40vw'}">
+
+    <div class="flex flex-column">
+      <div class="flex align-items-center justify-content-center">
+        <input type="text" pInputText [(ngModel)]="inviteLink" #userInput class="w-full" />
+      </div>
+      <div class="flex align-items-center justify-content-end">
+        <button pButton (click)="copyInviteLink(userInput)" value="click to copy" class="mt-4 ml-0">Copy to
+          clipboard</button>
+      </div>
+    </div>
+  </p-dialog>
+
+
+  <ng-container *ngIf="selectedGroup === 'All'; else showSelectedGroup">
+    <ng-container *ngIf="groupEvents && groupEvents.length > 0; else noGroups">
+      <div *ngFor="let groupEvent of groupEvents">
+        <ng-container *ngTemplateOutlet="groupTemplate; context: {$implicit: groupEvent}"></ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #showSelectedGroup>
+    <ng-container *ngIf="groupEvents && groupEvents.length > 0; else noGroups">
+      <div *ngFor="let groupEvent of groupEvents">
+        <div *ngIf="groupEvent.groupName === selectedGroup">
+          <ng-container *ngTemplateOutlet="groupTemplate; context: {$implicit: groupEvent}"></ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #noGroups>
+    <p-messages severity="info">
+      <ng-template pTemplate>
+        <span>You don't have any groups yet!</span>
+      </ng-template>
+    </p-messages>
+  </ng-template>
+
+  <ng-template #noEvents>
+    <p-messages severity="info">
+      <ng-template pTemplate>
+        <span>No events in this group!</span>
+      </ng-template>
+    </p-messages>
+  </ng-template>
+  <!-- </ng-container> -->
+</ng-container>
+
+<!-- <ng-template #loading>
+  <div class="w-full min-h-screen flex justify-content-center flex-wrap">
+    <p-progressSpinner class="flex align-items-center justify-content-center" />
+  </div>
+</ng-template> -->
+
+<!-- <ng-template #login>
+  <app-login />
+</ng-template> -->

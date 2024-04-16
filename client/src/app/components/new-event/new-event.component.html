@@ -1,0 +1,32 @@
+<p-toast />
+<form [formGroup]="form" (submit)="processForm()">
+  <div class="flex flex-column gap-2 mb-3">
+    <label for="title">Title</label>
+    <input pInputText id="title" formControlName="title" />
+  </div>
+
+  <div class="flex flex-column gap-2 mb-3">
+    <label for="description">Description</label>
+    <input id="description" type="text" pInputText formControlName="description">
+  </div>
+
+  <div class="flex flex-column gap-2 mb-3">
+    <label for="location">Location</label>
+    <input id="location" type="text" pInputText formControlName="location">
+  </div>
+
+  <div class="flex flex-column gap-2 mb-3">
+    <label for="start">Start</label>
+    <p-calendar id="start" [showTime]="true" hourFormat=24 [showIcon]="true" dateFormat="yy/mm/dd"
+      formControlName="start" appendTo="body" />
+  </div>
+
+  <div class="flex flex-column gap-2 mb-3">
+    <label for="end">End</label>
+    <p-calendar id="end" [showTime]="true" hourFormat=24 [showIcon]="true" dateFormat="yy/mm/dd" formControlName="end"
+      appendTo="body" />
+  </div>
+
+  <button type="submit" [disabled]="form.invalid" pButton pRipple label="Create" icon="pi pi-calendar-plus"
+    class="w-full mt-4"></button>
+</form>

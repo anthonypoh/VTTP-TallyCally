@@ -1,0 +1,10 @@
+<p-toast />
+<form [formGroup]="form" (submit)="processForm()">
+  <div class="flex flex-column gap-2 mb-3">
+    <label for="title">Title</label>
+    <input pInputText id="title" formControlName="groupName" />
+  </div>
+
+  <button type="submit" [disabled]="form.invalid" pButton pRipple label="Create" icon="pi pi-calendar-plus"
+    class="w-full mt-4"></button>
+</form>

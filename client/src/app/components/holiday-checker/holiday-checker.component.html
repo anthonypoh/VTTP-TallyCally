@@ -1,0 +1,32 @@
+<p-toast />
+<div>
+  <form [formGroup]="form" (submit)="processForm()">
+    <div>
+      <label for="country" class="block text-900 font-medium mb-2">Country Code</label>
+      <input id="country" type="text" placeholder="Country Code" pInputText class="w-6 mb-3"
+        formControlName="country">
+      <button type="submit" [disabled]="form.invalid" pButton pRipple label="Fetch" icon="pi pi-flag"
+        class="w-full"></button>
+    </div>
+  </form>
+</div>
+<ng-container *ngIf="holidays.length > 0">
+  <p-table [value]="holidays">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Date</th>
+        <th>Local Name</th>
+        <th>Name</th>
+        <th>Country Code</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-holiday>
+      <tr>
+        <td>{{ holiday.date }}</td>
+        <td>{{ holiday.localName }}</td>
+        <td>{{ holiday.name }}</td>
+        <td>{{ holiday.countryCode }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>

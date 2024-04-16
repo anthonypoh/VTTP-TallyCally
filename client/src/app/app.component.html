@@ -1,0 +1,20 @@
+<p-toast></p-toast>
+<p-menubar [model]="items">
+  <ng-container *ngIf="user$ | async as user">
+    <div *ngIf="user.name != ''">
+      <div class="flex flex-row flex-wrap">
+        <div class="flex align-items-center justify-content-center mr-4">
+          <span>Notifications:&nbsp;</span>
+          <p-inputSwitch [(ngModel)]="checked" (onChange)="notificationToggle()"></p-inputSwitch>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+          <p-button (onClick)="logout()" label="Logout" icon="pi pi-power-off"></p-button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</p-menubar>
+
+<!-- <ng-container *ngIf="user"> -->
+  <router-outlet />
+<!-- </ng-container> -->
